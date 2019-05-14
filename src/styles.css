@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.center-height-align{
+  margin-top: 200px;
+}
+
+.no-data-available {
+  text-align: center;
+}
+
+/*
+   src/styles.css (i.e. your global style)
+*/
+.dataTables_empty {
+  display: none;
+}
+
+h3{
+  text-align: center;
+}
+
+.sub-heading{
+  background-color:lightgrey;
+  padding:10px;
+  margin-bottom: 30px;
+}
+
+.date-label{
+  font-weight: bold;
+}
+
+ul{
+   margin: -4px;
+}
+
+.addTimesheetDiv{
+    margin-top: 100px;
+    margin-left:100px;
+    margin-right:250px;
+}
+
+.input-control{
+  size: 20px !important;
+}
+
+.navbar-right {
+
+    float: right;
+}
+
+.div-table-width{
+  max-width:1240px;
+}
+
+.tbody-style{
+background-color: white;
+}
+
+.empty-table{
+  border: 2px solid;
+}
+
+
+.user-setting-label{
+    font-family: Roboto,Arial,sans-serif;
+    font-size: .8875rem;
+    font-weight: 500;
+}
+
+    
+

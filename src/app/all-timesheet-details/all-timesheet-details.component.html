@@ -1,0 +1,96 @@
+<br>
+<h1 align="center">All Timesheet Details</h1>
+<div class="jumbotron">
+  <div class="div-table-width">
+    <div id="date_filter" style="margin-left:25px;">
+      <div class="row" align="center">
+        <div class="col-sm-2">
+          <label id="date-label-from" class="date-label">From Date:</label>
+        </div>
+        <div class="col-sm-2">
+          <ejs-datepicker id='datepicker_from' [(value)]='datepicker_from' placeholder='Select a date' [allowEdit]=false
+            strictMode='true' format='MM/dd/yyyy'></ejs-datepicker>
+        </div>
+
+        <div class="col-sm-2">
+          <label id="date-label-to" class="date-label">To Date: </label>
+        </div>
+        <div class="col-sm-2">
+          <ejs-datepicker id='datepicker_to' [(value)]='datepicker_to' placeholder='Select a date' [allowEdit]=false
+            strictMode='true' format='MM/dd/yyyy'></ejs-datepicker>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-secondary" (click)="filter(datepicker_from,datepicker_to)">Filter Data</button>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-secondary" (click)="reset()">Reset Filter</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <table id="third-table" datatable [dtOptions]="dtOptions[0]" width="100%" class="row-border hover table-bordered"
+      [dtTrigger]="dtTrigger3" style="border:3px solid black;">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Assigned To</th>
+          <th>Task Name</th>
+          <th>Date</th>
+          <th>Total Time</th>
+          <th>Notes</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="timesheets?.length > 0">
+        <tr *ngFor="let timesheet of timesheets;let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{timesheet.user_details[0].firstName}} {{timesheet.user_details[0].lastName}} </td>
+          <td>{{ timesheet.taskName }}</td>
+          <td>{{ timesheet.dateWorked | date: 'mediumDate' }}</td>
+          <td align="center">
+            <div *ngIf="timesheet.user_details[0].preferWorkHrs>timesheet.totalTime" style="background-color:crimson">
+              <b>
+                {{ timesheet.totalTime }}</b></div>
+            <div *ngIf="timesheet.user_details[0].preferWorkHrs<=timesheet.totalTime"
+              style="background-color:limegreen"><b>
+                {{ timesheet.totalTime }}</b></div>
+          </td>
+          <td>
+            <ul *ngFor="let note of timesheet.notes">
+              <li>{{note.note}}</li>
+            </ul>
+          </td>
+          <td align="center">
+            <div class="row">
+              <div class="col-md-6">
+                <button class="btn btn-sm btn-info" (click)="editTimesheet(timesheet)">Update</button>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-sm btn-danger" (click)="deleteTimesheet(timesheet._id)">Delete</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="timesheets?.length == 0">
+        <tr>
+          <td colspan="7" class="no-data-available">No data Available!</td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <!--<td class="no-data-available"></td>-->
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div>
+      <button id="openAdminAddTimesheet" class="btn btn-primary" (click)="addTimesheet()">Add Row</button>
+    </div>
+  </div>
+</div>

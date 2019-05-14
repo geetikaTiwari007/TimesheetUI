@@ -1,0 +1,49 @@
+<!-- main app container -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="currentUser">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul id="navLeft" class="navbar-nav mr-auto">
+      <li class="nav-item active" style="width:100px;">
+        <a class="nav-link" routerLink="/"> <i class="fa fa-home" style="font-size:20px"></i>&nbsp;Home</a>
+      </li>
+      <li class="nav-item active" style="width:150px;" *ngIf="isAdminManager">
+        <a class="nav-link" routerLink="/user-details"> <i class="fa fa-address-card-o"
+            style="font-size:20px"></i>&nbsp;User Admin</a>
+      </li>
+      <li class="nav-item active" style="width:200px;" *ngIf="isAdmin">
+        <a id="TimesheetAdminNav" class="nav-link" routerLink="/all-timesheet-details"> <i class="fa fa-tasks"
+            style="font-size:20px"></i>&nbsp;Timesheet Admin</a>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <ul id="navRight" class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o" color="white"></i>&nbsp;&nbsp;{{currentUser.firstName}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="'/user-setting'"> <i class="fa fa-gear"
+              style="font-size:20px"></i>&nbsp;&nbsp;Settings </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="'/change-password'"> <i class="fa fa-key"
+              style="font-size:20px"></i>&nbsp;&nbsp;Change Password </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()"> <i class="fa fa-sign-out" style="font-size:20px"></i>&nbsp;&nbsp;
+            Logout </a>
+        </div>
+      </li>
+    </ul>
+  </div>  
+</nav>
+
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <alert></alert>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

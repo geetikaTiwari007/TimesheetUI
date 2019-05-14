@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <div class="jumbotron">
+      <h2 class="text-center" *ngIf="!showUpdateButton">Add Timesheet</h2>
+      <h2 class="text-center" *ngIf="showUpdateButton">Update Timesheet</h2>
+      <form [formGroup]="addAdminTimesheetForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3" style="margin-top:20px;">
+              <label for="searchTerm">User Name:</label>
+            </div>
+            <div class="col-md-9" style="margin-left:0px;">
+              <mat-form-field class="container">
+                <!-- ADD AN INPUT BOX OF TYPE TEXT AND LINK IT TO THE AUTO COMPLETE PANEL. -->
+                <input id="searchTerm" type="text" placeholder="Search users ..." matInput [formControl]="searchTerm"
+                  [matAutocomplete]="auto">
+
+                <!-- CREATE AUTO COMPLETE PANEL WITH OPTIONS. -->
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let user of filteredUsers" [value]="user.username"
+                    (click)="selectedOption=user.id">
+                    {{ user.username }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <label for="taskName">Task Name:</label>
+          <input type="text" formControlName="taskName" placeholder="Task Name" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.taskName.errors }">
+          <div *ngIf="submitted && f.taskName.errors" class="invalid-feedback">
+            <div *ngIf="f.taskName.errors.required">Task Name is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="totalTime">Total Time:</label>
+          <input formControlName="totalTime" placeholder="Total Time Taken" name="totalTime" class="form-control"
+            id="totalTime" [ngClass]="{ 'is-invalid': submitted && f.totalTime.errors }">
+          <div *ngIf="submitted && f.totalTime.errors" class="invalid-feedback">
+            <div *ngIf="f.totalTime.errors.pattern">Total Time should be number</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dateWorked">Date:</label>
+          &nbsp;&nbsp;
+          <ejs-datepicker formControlName="dateWorked" id='dateWorked' [value]='dateWorked' [allowEdit]=false
+            placeholder='Enter date' strictMode='true' format='MM/dd/yyyy'>
+          </ejs-datepicker>
+
+        </div>
+        <div class="form-group">
+          <label for="notes"> Notes: </label>
+          <div formArrayName="notes">
+            <div *ngFor="let item of notesArray.controls; let pointIndex=index" [formGroupName]="pointIndex">
+              <div class="row">
+                <div class="col-md-9">
+                  <input type="text" formControlName="note" placeholder="Notes for Task" class="form-control">
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-danger" (click)="deleteNotes(pointIndex)">Delete Note</button>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+          <br>
+          <a class="btn btn-secondary" (click)="addNotes()">Add Note</a>
+        </div>
+
+
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group" *ngIf="!showUpdateButton">
+              <button id="SaveAdminTimesheet" [disabled]="loading" class="btn btn-primary">Add Timesheet</button>
+              <img *ngIf="loading"
+                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+            <div class="form-group" *ngIf="showUpdateButton">
+              <button id="UpdateAdminTimesheet" [disabled]="loading" class="btn btn-primary">Update</button>
+              <img *ngIf="loading"
+                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            &nbsp;
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <a class="btn btn-primary" style="color:white" (click)="goBack()">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

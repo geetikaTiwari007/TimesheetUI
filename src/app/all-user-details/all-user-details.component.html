@@ -1,0 +1,55 @@
+<br>
+<h1 align="center">User Details</h1>
+<div class="jumbotron">
+  <div class="div-table-width">
+    <table id="second-table" datatable [dtOptions]="dtOptions[0]" width="100%" class="row-border hover table-bordered"
+      [dtTrigger]="dtTrigger2" style="border:3px solid black;">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>User Name</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Role</th>
+          <th>Preferred Work Hours</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users?.length > 0">
+        <tr *ngFor="let user of users;let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.preferWorkHrs }}</td>
+          <td align="center">
+            <div class="row">
+              <div class="col-md-6">
+                <button id="openUpdateUser" class="btn btn-sm btn-info" (click)="editUser(user._id)">Update</button>
+              </div>
+              <div class="col-md-6">
+                <button id="deleteUser" class="btn btn-sm btn-danger" (click)="deleteUser(user._id)">Delete</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="users?.length == 0">
+        <tr>
+          <td colspan="6" class="no-data-available">No data Available!</td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+          <td style="display:none;"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+    <div>
+      <button  id="openAddUser" class="btn btn-primary" (click)="addUser()">Add Row</button>
+    </div>
+  </div>
+</div>
