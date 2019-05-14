@@ -16,7 +16,7 @@ export class AddTimesheetComponent implements OnInit {
   submitted = false;
   currentUser: User;
   showUpdateButton = false;
-
+  dateWorked = '';
   constructor(private formBuilder: FormBuilder,
     private timesheetService: TimesheetService,
     private router: Router,

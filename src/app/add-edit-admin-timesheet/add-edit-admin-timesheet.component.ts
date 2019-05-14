@@ -20,6 +20,7 @@ export class AddEditAdminTimesheetComponent implements OnInit {
   isLoading = false;
   searchTerm: FormControl = new FormControl();
   selectedOption: string;
+  dateWorked = '';
   constructor(private formBuilder: FormBuilder,
     private timesheetService: TimesheetService,
     private userService: UserService,
