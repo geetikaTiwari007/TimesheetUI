@@ -62,6 +62,7 @@ export class AddEditAdminTimesheetComponent implements OnInit {
       let dataModel = JSON.parse(timesheetData);
       dataModel.id = (JSON.parse(timesheetData)._id).toString();
       this.searchTerm.patchValue(dataModel.user_details[0].username);
+      this.dateWorked = dataModel.dateWorked;
       this.addAdminTimesheetForm.patchValue(dataModel);
       for (let i = 1; i < dataModel.notes.length; i++) {
         this.notesArray.push(this.formBuilder.group({ note: dataModel.notes[i].note.toString() }));

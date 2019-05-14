@@ -14,6 +14,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { DataTablesModule } from 'angular-datatables';
+import { MatDatepickerModule, MatNativeDateModule, MatFormFieldModule } from '@angular/material';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { AddTimesheetComponent } from './add-timesheet/add-timesheet.component';
 import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
@@ -37,8 +38,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
         DataTablesModule,
         DatePickerModule,
         MatInputModule,
-        MatAutocompleteModule
-
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule
     ],
     declarations: [
         AppComponent,

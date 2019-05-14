@@ -44,6 +44,7 @@ export class AddTimesheetComponent implements OnInit {
         let dataModel = timesheets.timesheet;
         dataModel.id = timesheetId;
         dataModel.userId = this.currentUser._id;
+        this.dateWorked = dataModel.dateWorked;
         this.addTimesheetForm.patchValue(dataModel);
         for (let i = 1; i < dataModel.notes.length; i++) {
           this.notesArray.push(this.formBuilder.group({ note: dataModel.notes[i].note.toString() }));
@@ -74,6 +75,7 @@ export class AddTimesheetComponent implements OnInit {
     }
     let id = localStorage.getItem('editTimesheetId');
     if (!id) {
+      
       this.timesheetService.createTimesheet(this.addTimesheetForm.value)
         .subscribe(data => {
           this.alertService.success('Timesheet added successfully', true);

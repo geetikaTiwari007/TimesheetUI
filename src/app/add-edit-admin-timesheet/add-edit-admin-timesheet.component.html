@@ -49,7 +49,11 @@
           <!--<ejs-datepicker formControlName="dateWorked" id='dateWorked' [value]='dateWorked' [allowEdit]=false
             placeholder='Enter date' strictMode='true' format='MM/dd/yyyy'>
           </ejs-datepicker>-->
-          <ng-datepicker formControlName="dateWorked" [(ngModel)]="dateWorked" placeholder='Enter date'/>
+          <mat-form-field>
+              <input formControlName="dateWorked" matInput [matDatepicker]="datepicker2" placeholder="Choose a date" [value]="dateWorked">
+              <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+              <mat-datepicker #datepicker2></mat-datepicker>
+           </mat-form-field>
 
         </div>
         <div class="form-group">
